@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loading">情報取得中…</string>
+    <string name="fail">取得失敗</string>
+    <string name="last_modified">最終更新日時: </string>
+
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="date">日</string>
+    <string name="hour">時</string>
+    <string name="minute">分</string>
+    <string name="second">秒</string>
+</resources>
