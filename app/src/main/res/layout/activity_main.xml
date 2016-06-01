@@ -7,10 +7,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="net.terminal_end.tasrankingviewer.MainActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    tools:context=".activity.MainActivity">
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/MainViewPagerTab"
+        android:layout_width="match_parent"
+        android:layout_height="48dip" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/MainViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/MainViewPagerTab" />
 </RelativeLayout>
