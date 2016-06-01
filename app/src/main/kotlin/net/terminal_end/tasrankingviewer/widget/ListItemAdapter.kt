@@ -27,9 +27,9 @@ class ListItemAdapter(context: Context, objects: List<String>): ArrayAdapter<Str
         }
         Log.d("getView", foo.reduce{ r, s -> r+s })
         val item = getItem(position)
-        val text1 = view!!.findViewById(R.id.TitleText) as TextView
+        val text1 = view!!.findViewById(R.id.TitleTextView) as TextView
         text1.text = "Title: $item"
-        val text2 = view!!.findViewById(R.id.SubTitleText) as TextView
+        val text2 = view!!.findViewById(R.id.TagsTextView) as TextView
         text2.text = "サブタイトル: " + foo[position] //SubTitle: $item"
 
         return view
