@@ -8,12 +8,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activity.MainActivity">
-    <android.support.v4.view.ViewPager
-        android:id="@+id/MainViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
     <com.astuetz.PagerSlidingTabStrip
         android:id="@+id/MainViewPagerTab"
         android:layout_width="match_parent"
         android:layout_height="48dip" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/MainViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/MainViewPagerTab" />
 </RelativeLayout>
