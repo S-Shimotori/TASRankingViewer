@@ -22,7 +22,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val viewPager = findViewById(R.id.MainViewPager) as ViewPager
-        val listFragmentPagerAdapter = ListFragment.ListFragmentPagerAdapter(supportFragmentManager)
+
+        val thisMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
+        val lastMonth = if (thisMonth == 1) {
+            12
+        } else {
+            thisMonth - 1
+        }
+
+        val titles = listOf(
+                resources.getString(R.string.videos_new_order),
+                thisMonth.toString() + resources.getString(R.string.videos_ranking),
+                lastMonth.toString() + resources.getString(R.string.videos_ranking)
+        )
+        val listFragmentPagerAdapter = ListFragment.ListFragmentPagerAdapter(supportFragmentManager, titles)
         viewPager.adapter = listFragmentPagerAdapter
 
         val pagerSlidingTabStrip = findViewById(R.id.MainViewPagerTab) as PagerSlidingTabStrip
