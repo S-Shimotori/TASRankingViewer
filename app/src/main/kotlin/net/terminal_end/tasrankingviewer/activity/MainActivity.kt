@@ -2,6 +2,8 @@ package net.terminal_end.tasrankingviewer.activity
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
@@ -42,24 +44,36 @@ class MainActivity : AppCompatActivity() {
         pagerSlidingTabStrip.setViewPager(viewPager)
         pagerSlidingTabStrip.indicatorColor = Color.rgb(0, 155, 159)
 
+        updateLastModified()
+    }
+
+    fun updateLastModified() {
         val client = OkHttpClient()
         val request = Request.Builder().url(resources.getString(R.string.endpoint_last_modified)).build()
         val lastModifiedTextView = findViewById(R.id.LastModifiedTextView) as TextView
         client.newCall(request).enqueue(object: Callback {
             override fun onFailure(call: Call?, e: IOException?) {
-                lastModifiedTextView.text = resources.getString(R.string.fail)
+                val handler = Handler(Looper.getMainLooper())
+                handler.post {
+                    lastModifiedTextView.text = resources.getString(R.string.fail)
+                }
             }
 
             override fun onResponse(call: Call?, response: Response?) {
+                val handler = Handler(Looper.getMainLooper())
                 if (response != null && response.isSuccessful) {
                     val lastModified = Gson().fromJson(response.body().string(), LastModified::class.java)
                     val calendarResult = lastModified.last_modified.toCalendar()
                     if (calendarResult.component1() != null) {
-                        lastModifiedTextView.text = createLastModifiedMessage(calendarResult.get())
+                        handler.post {
+                            lastModifiedTextView.text = createLastModifiedMessage(calendarResult.get())
+                        }
                         return
                     }
                 }
-                lastModifiedTextView.text = resources.getString(R.string.fail)
+                handler.post {
+                    lastModifiedTextView.text = resources.getString(R.string.fail)
+                }
             }
         })
     }
