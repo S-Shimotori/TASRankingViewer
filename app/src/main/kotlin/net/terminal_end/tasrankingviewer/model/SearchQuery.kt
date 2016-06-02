@@ -10,7 +10,7 @@ import java.lang.reflect.Type
  * Created by S-Shimotori on 6/2/16.
  */
 
-class SearchQuery private constructor(query: String, search: SearchField, join: List<Field>, filters: List<Filter>?, sortBy: SortBy?, order: Order?, from: Int?, size: Int?, issuer: String) {
+class SearchQuery private constructor(query: String, search: SearchField, join: List<Field>, filters: List<Filter>?, sortBy: SortBy?, order: Order?, from: Int?, size: Int?) {
     val query = query
     val search = search.fields
     val join = join
@@ -24,9 +24,9 @@ class SearchQuery private constructor(query: String, search: SearchField, join: 
         val service = listOf("video")
         val issuer = "net.terminal_end.tasrankingviewer"
 
-        fun getInstance(query: String, search: SearchField, join: List<Field>, filters: List<Filter>?, sortBy: SortBy?, order: Order?, from: Int?, size: Int?, issuer: String): SearchQuery? {
+        fun getInstance(query: String, search: SearchField, join: List<Field>, filters: List<Filter>?, sortBy: SortBy?, order: Order?, from: Int?, size: Int?): SearchQuery? {
             if ((from == null || from >= 0) && (size == null || 0 <= size && size <= 100)) {
-                return SearchQuery(query, search, join, filters, sortBy, order, from, size, issuer)
+                return SearchQuery(query, search, join, filters, sortBy, order, from, size)
             } else {
                 return null
             }
