@@ -12,6 +12,7 @@ import java.lang.reflect.Type
 
 class SearchQuery private constructor(query: String, search: SearchField, join: List<Field>, filters: List<Filter>?, sortBy: SortBy?, order: Order?, from: Int?, size: Int?) {
     val query = query
+    val service = listOf("video")
     val search = search.fields
     val join = join
     val filters = filters
@@ -19,10 +20,10 @@ class SearchQuery private constructor(query: String, search: SearchField, join: 
     val order = order
     val from = from
     val size = size
+    val issuer = ISSUER_NAME
 
     companion object {
-        val service = listOf("video")
-        val issuer = "net.terminal_end.tasrankingviewer"
+        val ISSUER_NAME = "net.terminal_end.tasrankingviewer"
 
         fun getInstance(query: String, search: SearchField, join: List<Field>, filters: List<Filter>?, sortBy: SortBy?, order: Order?, from: Int?, size: Int?): SearchQuery? {
             if ((from == null || from >= 0) && (size == null || 0 <= size && size <= 100)) {

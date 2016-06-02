@@ -15,7 +15,7 @@ import org.junit.Test
 class SearchQueryTest {
     @Test
     fun issuerLength() {
-        assertThat(SearchQuery.issuer.length, `is`(lessThanOrEqualTo(40)))
+        assertThat(SearchQuery.ISSUER_NAME.length, `is`(lessThanOrEqualTo(40)))
     }
 
     @Test
@@ -63,6 +63,7 @@ class SearchQueryTest {
                     .fromJson(jsonString, SearchQuery::class.java)
 
             assertThat(searchQuery1.query, `is`("初音ミク"))
+            assertThat(searchQuery1.service, `is`(contains("video")))
             assertThat(searchQuery1.search, `is`(SearchQuery.SearchField.KEYWORD.fields))
             assertThat(searchQuery1.join, `is`(join))
             assertThat(searchQuery1.filters!!.asIterable(), `is`(contains(samePropertyValuesAs(filter))))
@@ -70,6 +71,7 @@ class SearchQueryTest {
             assertThat(searchQuery1.order, `is`(SearchQuery.Order.asc))
             assertThat(searchQuery1.from, `is`(0))
             assertThat(searchQuery1.size, `is`(3))
+            assertThat(searchQuery1.issuer, `is`(SearchQuery.ISSUER_NAME))
         }
 
         @Test
