@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="endpoint_last_modified">http://api.search.nicovideo.jp/api/snapshot/version</string>
+    <string name="endpoint_search">http://api.search.nicovideo.jp/api/snapshot/</string>
 </resources>
