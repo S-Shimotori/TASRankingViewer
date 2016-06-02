@@ -40,18 +40,18 @@ class ListFragment: Fragment() {
         return listView
     }
 
-    class ListFragmentPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
-        private val PAGE_COUNT = 5
+    class ListFragmentPagerAdapter(fm: FragmentManager, titles: List<String>): FragmentPagerAdapter(fm) {
+        private val titles = titles
 
         override fun getPageTitle(position: Int): CharSequence? {
-            return position.toString()
+            return titles[position]
         }
         override fun getItem(position: Int): android.support.v4.app.Fragment? {
             return ListFragment.newInstance(position)
         }
 
         override fun getCount(): Int {
-            return PAGE_COUNT
+            return titles.size
         }
     }
 

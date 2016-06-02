@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TASRankingViewer</string>
+    <string name="videos_new_order">新着TAS動画</string>
+    <string name="videos_ranking">月のTAS動画ランキング</string>
 </resources>
