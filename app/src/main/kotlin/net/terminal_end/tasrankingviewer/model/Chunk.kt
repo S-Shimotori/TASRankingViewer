@@ -63,7 +63,10 @@ interface Chunk {
                 Type.stats -> {
                     val values = if (jsonObject["values"] != null) {
                         try {
-                            context.deserialize<List<Value.Stats>>(jsonObject["values"], List::class.java)
+                            val jsonArray = jsonObject["values"].asJsonArray
+                            jsonArray.map {
+                                context.deserialize<Value.Stats>(it, Value.Stats::class.java)
+                            }
                         } catch (e: Exception) {
                             null
                         }
@@ -75,7 +78,10 @@ interface Chunk {
                 Type.hits -> {
                     val values = if (jsonObject["values"] != null) {
                         try {
-                            context.deserialize<List<Value.Hits>>(jsonObject["values"], List::class.java)
+                            val jsonArray = jsonObject["values"].asJsonArray
+                            jsonArray.map {
+                                context.deserialize<Value.Hits>(it, Value.Hits::class.java)
+                            }
                         } catch (e: Exception) {
                             null
                         }
