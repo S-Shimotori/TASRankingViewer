@@ -17,6 +17,7 @@ import net.terminal_end.tasrankingviewer.model.SearchQuery
 import net.terminal_end.tasrankingviewer.model.SearchResponse
 import net.terminal_end.tasrankingviewer.model.VideoData
 import net.terminal_end.tasrankingviewer.widget.ListItemAdapter
+import net.terminal_end.tasrankingviewer.widget.ListNoItemAdapter
 import okhttp3.*
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -39,6 +40,8 @@ class ListFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val listView = inflater!!.inflate(R.layout.list_view, null) as ListView
+        listView.adapter = ListNoItemAdapter(context, listOf(resources.getString(R.string.loading)))
+        listView.divider.alpha = 0
 
         when (arguments.getInt("position")) {
             0 -> {
@@ -98,7 +101,10 @@ class ListFragment: Fragment() {
                 .build()
         client.newCall(request).enqueue(object: Callback {
             override fun onFailure(call: Call?, e: IOException?) {
-                // TODO
+                val handler = Handler(Looper.getMainLooper())
+                handler.post {
+                    listView.adapter = ListNoItemAdapter(context, listOf(resources.getString(R.string.fail)))
+                }
             }
 
             override fun onResponse(call: Call?, response: Response?) {
@@ -118,6 +124,7 @@ class ListFragment: Fragment() {
                                             videoData.value
                                         }
                                         listView.adapter = ListItemAdapter(context, objects)
+                                        listView.divider.alpha = 255
                                     }
                                     return
                                 }
@@ -125,7 +132,10 @@ class ListFragment: Fragment() {
                         }
                     }
                 }
-                // TODO
+                val handler = Handler(Looper.getMainLooper())
+                handler.post {
+                    listView.adapter = ListNoItemAdapter(context, listOf(resources.getString(R.string.fail)))
+                }
             }
         })
     }
