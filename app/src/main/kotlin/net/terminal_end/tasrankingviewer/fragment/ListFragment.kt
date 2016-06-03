@@ -132,6 +132,7 @@ class ListFragment: Fragment() {
                         }
                     }
                 }
+                response?.body()?.close()
                 val handler = Handler(Looper.getMainLooper())
                 handler.post {
                     listView.adapter = ListNoItemAdapter(context, listOf(resources.getString(R.string.fail)))
