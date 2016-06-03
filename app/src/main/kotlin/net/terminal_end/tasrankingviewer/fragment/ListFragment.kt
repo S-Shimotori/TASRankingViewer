@@ -1,26 +1,26 @@
 package net.terminal_end.tasrankingviewer.fragment
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-import android.widget.Toast
+import com.github.kittinunf.result.Result
 import com.google.gson.Gson
 import net.terminal_end.tasrankingviewer.R
-import net.terminal_end.tasrankingviewer.model.SearchError
 import net.terminal_end.tasrankingviewer.model.SearchQuery
 import net.terminal_end.tasrankingviewer.model.SearchResponse
+import net.terminal_end.tasrankingviewer.model.VideoData
 import net.terminal_end.tasrankingviewer.widget.ListItemAdapter
 import okhttp3.*
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by S-Shimotori on 6/1/16.
@@ -39,33 +39,57 @@ class ListFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val listView = inflater!!.inflate(R.layout.list_view, null) as ListView
-        val list = listOf(1..5).map { it.toString() }
-        listView.adapter = ListItemAdapter(context, list)
 
-        listView.setOnItemClickListener { adapterView, view, i, l ->
-            val str = adapterView.getItemAtPosition(i) as String
-            Toast.makeText(activity, str, Toast.LENGTH_SHORT).show()
+        when (arguments.getInt("position")) {
+            0 -> {
+                setListItem(listView, null, SearchQuery.SortBy.start_time, null, null)
+            }
+            1 -> {
+                val calendarThisMonth = Calendar.getInstance()
+                setRankingByMonth(listView, calendarThisMonth.get(Calendar.MONTH))
+            }
+            2 -> {
+                val calendarLastMonth = Calendar.getInstance()
+                calendarLastMonth.add(Calendar.MONTH, -1)
+                setRankingByMonth(listView, calendarLastMonth.get(Calendar.MONTH))
+            }
         }
-
-        update()
-
         return listView
     }
 
-    fun update() {
+    fun setRankingByMonth(listView: ListView, month: Int) {
+        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val calendarBeginningOfMonth = Calendar.getInstance()
+        calendarBeginningOfMonth.set(Calendar.MONTH, month)
+        calendarBeginningOfMonth.set(Calendar.DATE, 1)
+        calendarBeginningOfMonth.set(Calendar.HOUR, 0)
+        calendarBeginningOfMonth.set(Calendar.MINUTE, 0)
+        calendarBeginningOfMonth.set(Calendar.SECOND, 0)
+        val calendarEndOfMonth = Calendar.getInstance()
+        calendarEndOfMonth.set(Calendar.MONTH, month)
+        calendarEndOfMonth.set(Calendar.DATE, calendarEndOfMonth.getActualMaximum(Calendar.DATE))
+        calendarEndOfMonth.set(Calendar.HOUR_OF_DAY, 23)
+        calendarEndOfMonth.set(Calendar.MINUTE, 59)
+        calendarEndOfMonth.set(Calendar.SECOND, 59)
+        val range = SearchQuery.Filter.Range.String(
+                SearchQuery.Field.start_time,
+                format.format(calendarBeginningOfMonth.time),
+                format.format(calendarEndOfMonth.time),
+                true, true
+        )
+
+        setListItem(listView, listOf(range), null, null) {
+            it.getScore() * -1
+        }
+    }
+
+    fun setListItem(listView: ListView, filters: List<SearchQuery.Filter>?, sortBy: SearchQuery.SortBy?, order: SearchQuery.Order?, sortByResult: ((VideoData) -> Int)?) {
+
         val query = SearchQuery.getInstance(
                 "TAS OR TAP OR tool\"-\"",
-                SearchQuery.SearchField.TAG,
-                listOf(SearchQuery.Field.cmsid, SearchQuery.Field.title, SearchQuery.Field.view_counter),
-                listOf(SearchQuery.Filter.Range.String(
-                        SearchQuery.Field.start_time,
-                        "2016-05-01 00:00:00", "2016-05-31 23:59:59", true, true
-                )),
-                SearchQuery.SortBy.view_counter, SearchQuery.Order.desc, 0, 5
+                SearchQuery.SearchField.TAG, ListItemAdapter.getFieldList(), filters, sortBy, order, 0, 50
         )!!
         val jsonString = Gson().toJson(query)
-
-        Log.d("ListFragment", jsonString)
 
         val client = OkHttpClient()
         val request = Request.Builder()
@@ -74,35 +98,36 @@ class ListFragment: Fragment() {
                 .build()
         client.newCall(request).enqueue(object: Callback {
             override fun onFailure(call: Call?, e: IOException?) {
-                Log.e("ListFragment", e.toString())
-                showErrorAlert("接続できませんでした")
+                // TODO
             }
 
             override fun onResponse(call: Call?, response: Response?) {
                 if (response != null && response.isSuccessful) {
                     val searchResponseString = response.body().string()
-
                     if (searchResponseString.contains("}\n{")) {
-                        val searchResponse = SearchResponse.getInstance(searchResponseString)
-                        Log.d("ListFragment", searchResponse.hits[0].values!!.map { it.title }.joinToString(","))
-                    } else {
-                        val searchError = Gson().fromJson(searchResponseString, SearchError::class.java)
-                        showErrorAlert(searchError.errid)
+                        val hitsValues = SearchResponse.getInstance(searchResponseString).hits[0].values
+                        if (hitsValues != null) {
+                            val videoData = VideoData.convertFromChunkHitsValues(hitsValues)
+                            when (videoData) {
+                                is Result.Success -> {
+                                    val handler = Handler(Looper.getMainLooper())
+                                    handler.post {
+                                        val objects = if (sortByResult != null) {
+                                            videoData.value.sortedBy(sortByResult)
+                                        } else {
+                                            videoData.value
+                                        }
+                                        listView.adapter = ListItemAdapter(context, objects)
+                                    }
+                                    return
+                                }
+                            }
+                        }
                     }
                 }
+                // TODO
             }
         })
-    }
-
-    fun showErrorAlert(errorMessage: String) {
-        val handler = Handler(Looper.getMainLooper())
-        handler.post {
-            AlertDialog.Builder(activity)
-                    .setTitle("エラー")
-                    .setMessage("取得に失敗しました。($errorMessage)")
-                    .setPositiveButton("OK", null)
-                    .show()
-        }
     }
 
     class ListFragmentPagerAdapter(fm: FragmentManager, titles: List<String>): FragmentPagerAdapter(fm) {
