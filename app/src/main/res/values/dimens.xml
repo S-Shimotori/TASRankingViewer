@@ -17,7 +17,7 @@
     <dimen name="date_text_font">12sp</dimen>
     <dimen name="date_text_margin_bottom">5dp</dimen>
     <dimen name="cms_id_font">12sp</dimen>
-    <dimen name="tas_point_text_font">15 p</dimen>
+    <dimen name="tas_point_text_font">15sp</dimen>
 
     <dimen name="title_text_font">20sp</dimen>
     <dimen name="tag_text_font">13sp</dimen>
