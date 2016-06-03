@@ -1,6 +1,9 @@
 package net.terminal_end.tasrankingviewer.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
@@ -12,6 +15,7 @@ import android.widget.ListView
 import android.widget.Toast
 import com.google.gson.Gson
 import net.terminal_end.tasrankingviewer.R
+import net.terminal_end.tasrankingviewer.model.SearchError
 import net.terminal_end.tasrankingviewer.model.SearchQuery
 import net.terminal_end.tasrankingviewer.model.SearchResponse
 import net.terminal_end.tasrankingviewer.widget.ListItemAdapter
@@ -71,16 +75,34 @@ class ListFragment: Fragment() {
         client.newCall(request).enqueue(object: Callback {
             override fun onFailure(call: Call?, e: IOException?) {
                 Log.e("ListFragment", e.toString())
+                showErrorAlert("接続できませんでした")
             }
 
             override fun onResponse(call: Call?, response: Response?) {
                 if (response != null && response.isSuccessful) {
                     val searchResponseString = response.body().string()
-                    val searchResponse = SearchResponse.getInstance(searchResponseString)
-                    Log.d("ListFragment", searchResponse.hits[0].values!!.map { it.title }.joinToString(","))
+
+                    if (searchResponseString.contains("}\n{")) {
+                        val searchResponse = SearchResponse.getInstance(searchResponseString)
+                        Log.d("ListFragment", searchResponse.hits[0].values!!.map { it.title }.joinToString(","))
+                    } else {
+                        val searchError = Gson().fromJson(searchResponseString, SearchError::class.java)
+                        showErrorAlert(searchError.errid)
+                    }
                 }
             }
         })
+    }
+
+    fun showErrorAlert(errorMessage: String) {
+        val handler = Handler(Looper.getMainLooper())
+        handler.post {
+            AlertDialog.Builder(activity)
+                    .setTitle("エラー")
+                    .setMessage("取得に失敗しました。($errorMessage)")
+                    .setPositiveButton("OK", null)
+                    .show()
+        }
     }
 
     class ListFragmentPagerAdapter(fm: FragmentManager, titles: List<String>): FragmentPagerAdapter(fm) {
