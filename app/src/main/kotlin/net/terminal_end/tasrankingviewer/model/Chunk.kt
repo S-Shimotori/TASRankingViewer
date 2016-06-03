@@ -103,7 +103,7 @@ interface Chunk {
     interface Value {
         val _rowid: Int
 
-        class Stats(rowId: Int, service: String, total: Int): Value {
+        class Stats(rowId: Int, service: SearchResponse.Service, total: Int): Value {
             override val _rowid = rowId
             val service = service
             val total = total

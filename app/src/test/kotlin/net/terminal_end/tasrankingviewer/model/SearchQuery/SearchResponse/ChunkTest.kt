@@ -2,6 +2,7 @@ package net.terminal_end.tasrankingviewer.model.SearchQuery.SearchResponse
 
 import com.google.gson.GsonBuilder
 import net.terminal_end.tasrankingviewer.model.Chunk
+import net.terminal_end.tasrankingviewer.model.SearchResponse
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.Matchers.contains
@@ -73,7 +74,7 @@ class ChunkTest {
                         .fromJson(jsonString, Chunk::class.java) as Chunk.Stats
                 assertThat(stats.dqnid, `is`("c0676eea-cc77-4317-b442-d626c5f34558"))
                 assertThat(stats.type, `is`(Chunk.Type.stats))
-                assertThat(stats.values!!.asIterable(), `is`(contains(samePropertyValuesAs(Chunk.Value.Stats(0, "video", 213353)))))
+                assertThat(stats.values!!.asIterable(), `is`(contains(samePropertyValuesAs(Chunk.Value.Stats(0, SearchResponse.Service.video, 213353)))))
                 assertThat(stats.endofstream, `is`(false))
             }
 

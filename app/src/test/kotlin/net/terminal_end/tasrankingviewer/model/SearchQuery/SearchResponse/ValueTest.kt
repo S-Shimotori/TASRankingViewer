@@ -2,6 +2,7 @@ package net.terminal_end.tasrankingviewer.model.SearchQuery.SearchResponse
 
 import com.google.gson.Gson
 import net.terminal_end.tasrankingviewer.model.Chunk
+import net.terminal_end.tasrankingviewer.model.SearchResponse
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.nullValue
 import org.junit.Assert.assertThat
@@ -26,7 +27,7 @@ class ValueTest {
 
                 val stats = Gson().fromJson(jsonString, Chunk.Value.Stats::class.java)
                 assertThat(stats._rowid, `is`(0))
-                assertThat(stats.service, `is`("video"))
+                assertThat(stats.service, `is`(SearchResponse.Service.video))
                 assertThat(stats.total, `is`(213353))
             }
         }
