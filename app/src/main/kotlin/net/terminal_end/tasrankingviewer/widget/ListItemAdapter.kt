@@ -1,20 +1,16 @@
 package net.terminal_end.tasrankingviewer.widget
 
 import android.content.Context
-import android.graphics.BitmapFactory
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.squareup.picasso.Picasso
 import net.terminal_end.tasrankingviewer.R
 import net.terminal_end.tasrankingviewer.model.SearchQuery
 import net.terminal_end.tasrankingviewer.model.VideoData
-import okhttp3.*
-import java.io.IOException
 import java.util.*
 
 /**
@@ -54,27 +50,7 @@ class ListItemAdapter(context: Context, objects: List<VideoData>): ArrayAdapter<
 
         val thumbnailImageView = view!!.findViewById(R.id.ThumbnailImageView) as ImageView
         thumbnailImageView.setImageDrawable(context.getDrawable(R.drawable.thumbnail))
-        val okHttpHandler = OkHttpClient()
-        val request = Request.Builder()
-                .url(item.thumbnailUrl)
-                .get()
-                .build()
-        okHttpHandler.newCall(request).enqueue(object: Callback {
-            override fun onFailure(call: Call?, e: IOException?) {
-                // TODO
-            }
-
-            override fun onResponse(call: Call?, response: Response?) {
-                val handler = Handler(Looper.getMainLooper())
-                if (response != null && response.isSuccessful) {
-                    val inputStream = response.body().byteStream()
-                    val bitmap = BitmapFactory.decodeStream(inputStream)
-                    handler.post {
-                        thumbnailImageView.setImageBitmap(bitmap)
-                    }
-                }
-            }
-        })
+        Picasso.with(context).load(item.thumbnailUrl).into(thumbnailImageView)
 
         val cmsIdTextView = view!!.findViewById(R.id.CmsIdTextView) as TextView
         cmsIdTextView.text = item.cmsId
