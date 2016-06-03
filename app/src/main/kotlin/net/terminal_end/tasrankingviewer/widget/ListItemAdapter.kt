@@ -63,7 +63,9 @@ class ListItemAdapter(context: Context, objects: List<VideoData>): ArrayAdapter<
         titleTextView.text = item.title
 
         val tagsTextView = view!!.findViewById(R.id.TagsTextView) as TextView
-        tagsTextView.text = item.tags.joinToString("   ")
+        tagsTextView.text = item.tags
+                .filter { it != "TAS" && it != "TAP" && it != "ゲーム" }
+                .joinToString("   ")
 
         val viewCounterTextView = view!!.findViewById(R.id.ViewCounterTextView) as TextView
         viewCounterTextView.text = "再生数: " + item.viewCounter.toString()
