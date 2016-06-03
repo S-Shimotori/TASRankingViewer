@@ -1,6 +1,8 @@
 package net.terminal_end.tasrankingviewer.widget
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,6 +53,9 @@ class ListItemAdapter(context: Context, objects: List<VideoData>): ArrayAdapter<
         val thumbnailImageView = view!!.findViewById(R.id.ThumbnailImageView) as ImageView
         thumbnailImageView.scaleType = ImageView.ScaleType.CENTER_CROP
         thumbnailImageView.setImageDrawable(context.getDrawable(R.drawable.thumbnail))
+        thumbnailImageView.setOnClickListener {
+            openNicoVideo(context, item.cmsId)
+        }
         Picasso.with(context).load(item.thumbnailUrl).into(thumbnailImageView)
 
         val cmsIdTextView = view!!.findViewById(R.id.CmsIdTextView) as TextView
@@ -61,6 +66,9 @@ class ListItemAdapter(context: Context, objects: List<VideoData>): ArrayAdapter<
 
         val titleTextView = view!!.findViewById(R.id.TitleTextView) as TextView
         titleTextView.text = item.title
+        titleTextView.setOnClickListener {
+            openNicoVideo(context, item.cmsId)
+        }
 
         val tagsTextView = view!!.findViewById(R.id.TagsTextView) as TextView
         tagsTextView.text = item.tags
@@ -87,5 +95,10 @@ class ListItemAdapter(context: Context, objects: List<VideoData>): ArrayAdapter<
                     SearchQuery.Field.view_counter, SearchQuery.Field.comment_counter, SearchQuery.Field.mylist_counter
             )
         }
+    }
+
+    fun openNicoVideo(context: Context, cmsId: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.nicovideo.jp/watch/" + cmsId))
+        context.startActivity(intent)
     }
 }
