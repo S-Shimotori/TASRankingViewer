@@ -42,7 +42,7 @@ class ListFragment: Fragment() {
 
         when (arguments.getInt("position")) {
             0 -> {
-                // TODO
+                setListItem(listView, null, SearchQuery.SortBy.start_time, null, null)
             }
             1 -> {
                 val calendarThisMonth = Calendar.getInstance()
@@ -78,9 +78,16 @@ class ListFragment: Fragment() {
                 true, true
         )
 
+        setListItem(listView, listOf(range), null, null) {
+            it.getScore() * -1
+        }
+    }
+
+    fun setListItem(listView: ListView, filters: List<SearchQuery.Filter>?, sortBy: SearchQuery.SortBy?, order: SearchQuery.Order?, sortByResult: ((VideoData) -> Int)?) {
+
         val query = SearchQuery.getInstance(
                 "TAS OR TAP OR tool\"-\"",
-                SearchQuery.SearchField.TAG, ListItemAdapter.getFieldList(), listOf(range), null, null, 0, 100
+                SearchQuery.SearchField.TAG, ListItemAdapter.getFieldList(), filters, sortBy, order, 0, 50
         )!!
         val jsonString = Gson().toJson(query)
 
@@ -105,9 +112,12 @@ class ListFragment: Fragment() {
                                 is Result.Success -> {
                                     val handler = Handler(Looper.getMainLooper())
                                     handler.post {
-                                        listView.adapter = ListItemAdapter(context, videoData.value.sortedBy {
-                                            -1 * it.getScore()
-                                        })
+                                        val objects = if (sortByResult != null) {
+                                            videoData.value.sortedBy(sortByResult)
+                                        } else {
+                                            videoData.value
+                                        }
+                                        listView.adapter = ListItemAdapter(context, objects)
                                     }
                                     return
                                 }
