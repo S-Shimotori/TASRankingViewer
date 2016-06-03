@@ -13,6 +13,7 @@ import android.widget.Toast
 import com.google.gson.Gson
 import net.terminal_end.tasrankingviewer.R
 import net.terminal_end.tasrankingviewer.model.SearchQuery
+import net.terminal_end.tasrankingviewer.model.SearchResponse
 import net.terminal_end.tasrankingviewer.widget.ListItemAdapter
 import okhttp3.*
 import java.io.IOException
@@ -74,8 +75,9 @@ class ListFragment: Fragment() {
 
             override fun onResponse(call: Call?, response: Response?) {
                 if (response != null && response.isSuccessful) {
-                    val jsonString = response.body().string()
-                    Log.d("ListFragment", jsonString)
+                    val searchResponseString = response.body().string()
+                    val searchResponse = SearchResponse.getInstance(searchResponseString)
+                    Log.d("ListFragment", searchResponse.hits[0].values!!.map { it.title }.joinToString(","))
                 }
             }
         })
