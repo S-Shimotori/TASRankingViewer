@@ -51,7 +51,7 @@
                     android:text="sm000000" />
 
                 <TextView
-                    android:id="@+id/TasPointView"
+                    android:id="@+id/TasPointTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="point"/>
