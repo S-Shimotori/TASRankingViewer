@@ -49,6 +49,7 @@ class ListItemAdapter(context: Context, objects: List<VideoData>): ArrayAdapter<
                 context.getString(R.string.second)
 
         val thumbnailImageView = view!!.findViewById(R.id.ThumbnailImageView) as ImageView
+        thumbnailImageView.scaleType = ImageView.ScaleType.CENTER_CROP
         thumbnailImageView.setImageDrawable(context.getDrawable(R.drawable.thumbnail))
         Picasso.with(context).load(item.thumbnailUrl).into(thumbnailImageView)
 
@@ -62,16 +63,16 @@ class ListItemAdapter(context: Context, objects: List<VideoData>): ArrayAdapter<
         titleTextView.text = item.title
 
         val tagsTextView = view!!.findViewById(R.id.TagsTextView) as TextView
-        tagsTextView.text = item.tags.joinToString(" ")
+        tagsTextView.text = item.tags.joinToString("   ")
 
         val viewCounterTextView = view!!.findViewById(R.id.ViewCounterTextView) as TextView
-        viewCounterTextView.text = item.viewCounter.toString()
+        viewCounterTextView.text = "再生数: " + item.viewCounter.toString()
 
         val commentCounterTextView = view!!.findViewById(R.id.CommentCounterTextView) as TextView
-        commentCounterTextView.text = item.commentCounter.toString()
+        commentCounterTextView.text = "コメント数: " + item.commentCounter.toString()
 
         val myListCounterTextView = view!!.findViewById(R.id.MyListCounterTextView) as TextView
-        myListCounterTextView.text = item.myListCounter.toString()
+        myListCounterTextView.text = "マイリスト数: " + item.myListCounter.toString() + "  ×20"
 
         return view
     }

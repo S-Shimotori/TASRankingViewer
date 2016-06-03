@@ -2,16 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    android:padding="@dimen/list_item_space"
+    android:layout_margin="@dimen/list_item_margin"
+    android:padding="@dimen/list_item_padding"
     android:orientation="horizontal">
 
     <TextView
         android:id="@+id/RankingTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/ranking_text_width"
         android:layout_height="wrap_content"
-        android:text="N"
-        android:textSize="24sp" />
+        android:textSize="@dimen/ranking_text_font" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,9 +20,9 @@
         <TextView
             android:id="@+id/DateTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="2016-06-01 00:00:00 uploaded"
-            android:layout_marginBottom="@dimen/list_item_space"/>
+            android:layout_height="@dimen/date_text_height"
+            android:layout_marginBottom="@dimen/date_text_margin_bottom"
+            android:textSize="@dimen/date_text_font"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,21 +39,20 @@
 
                 <ImageView
                     android:id="@+id/ThumbnailImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/thumbnail" />
+                    android:layout_width="@dimen/thumbnail_width"
+                    android:layout_height="@dimen/thumbnail_height" />
 
                 <TextView
                     android:id="@+id/CmsIdTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="sm000000" />
+                    android:textSize="@dimen/cms_id_font"/>
 
                 <TextView
                     android:id="@+id/TasPointTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="point"/>
+                    android:textSize="@dimen/tas_point_text_font"/>
 
             </LinearLayout>
 
@@ -62,42 +60,51 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/list_item_space"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/TitleTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="36sp" />
+                    android:layout_marginBottom="@dimen/list_item_space"
+                    android:textSize="@dimen/title_text_font" />
 
                 <TextView
                     android:id="@+id/TagsTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp" />
+                    android:layout_marginStart="@dimen/list_item_space"
+                    android:layout_marginEnd="@dimen/list_item_space"
+                    android:layout_marginBottom="@dimen/list_item_space"
+                    android:textSize="@dimen/tag_text_font" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/list_item_space"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/ViewCounterTextView"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="view"/>
+                        android:layout_weight="1"
+                        android:textSize="@dimen/counter_text_font"/>
 
                     <TextView
                         android:id="@+id/CommentCounterTextView"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="comment"/>
+                        android:layout_weight="1"
+                        android:textSize="@dimen/counter_text_font" />
 
                     <TextView
                         android:id="@+id/MyListCounterTextView"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="mylist"/>
+                        android:layout_weight="1"
+                        android:textSize="@dimen/counter_text_font"/>
 
                 </LinearLayout>
 
