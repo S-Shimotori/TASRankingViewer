@@ -1,5 +1,6 @@
 package net.terminal_end.tasrankingviewer.model
 
+import android.text.Html
 import com.github.kittinunf.result.Result
 import net.terminal_end.tasrankingviewer.util.toCalendar
 import java.util.*
@@ -10,7 +11,7 @@ import java.util.*
 
 class VideoData(cmsId: String, title: String, tags: List<String>, startTime: Calendar, thumbnailUrl: String, viewCounter: Int, commentCounter: Int, myListCounter: Int) {
     val cmsId = cmsId
-    val title = title
+    val title = Html.fromHtml(title)
     val tags = tags
     val startTime = startTime
     val thumbnailUrl = thumbnailUrl
