@@ -19,8 +19,9 @@ import java.util.*
  * Created by S-Shimotori on 6/1/16.
  */
 
-class ListItemAdapter(context: Context, objects: List<VideoData>): ArrayAdapter<VideoData>(context, 0, objects) {
+class ListItemAdapter(context: Context, objects: List<VideoData>, showRowId: Boolean): ArrayAdapter<VideoData>(context, 0, objects) {
     private val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    val showRowId = showRowId
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
         var view: View?
@@ -33,7 +34,12 @@ class ListItemAdapter(context: Context, objects: List<VideoData>): ArrayAdapter<
         val item = getItem(position)
 
         val rankingTextView = view!!.findViewById(R.id.RankingTextView) as TextView
-        rankingTextView.text = (position + 1).toString()
+        if (showRowId) {
+            rankingTextView.text = (position + 1).toString()
+            rankingTextView.width = context.resources.getDimension(R.dimen.ranking_text_width).toInt()
+        } else {
+            rankingTextView.textSize = 0f
+        }
 
         val dateTextView = view!!.findViewById(R.id.DateTextView) as TextView
         dateTextView.text =

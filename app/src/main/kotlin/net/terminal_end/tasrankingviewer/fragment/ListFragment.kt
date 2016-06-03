@@ -45,7 +45,7 @@ class ListFragment: Fragment() {
 
         when (arguments.getInt("position")) {
             0 -> {
-                setListItem(listView, null, SearchQuery.SortBy.start_time, null, null)
+                setListItem(listView, null, SearchQuery.SortBy.start_time, null, false, null)
             }
             1 -> {
                 val calendarThisMonth = Calendar.getInstance()
@@ -81,12 +81,12 @@ class ListFragment: Fragment() {
                 true, true
         )
 
-        setListItem(listView, listOf(range), null, null) {
+        setListItem(listView, listOf(range), null, null, true) {
             it.getScore() * -1
         }
     }
 
-    fun setListItem(listView: ListView, filters: List<SearchQuery.Filter>?, sortBy: SearchQuery.SortBy?, order: SearchQuery.Order?, sortByResult: ((VideoData) -> Int)?) {
+    fun setListItem(listView: ListView, filters: List<SearchQuery.Filter>?, sortBy: SearchQuery.SortBy?, order: SearchQuery.Order?, showRowId: Boolean, sortByResult: ((VideoData) -> Int)?) {
 
         val query = SearchQuery.getInstance(
                 "TAS OR TAP OR tool\"-\"",
@@ -123,7 +123,7 @@ class ListFragment: Fragment() {
                                         } else {
                                             videoData.value
                                         }
-                                        listView.adapter = ListItemAdapter(context, objects)
+                                        listView.adapter = ListItemAdapter(context, objects, showRowId)
                                         listView.divider.alpha = 255
                                     }
                                     return
