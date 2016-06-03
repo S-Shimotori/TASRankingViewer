@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
+    android:padding="@dimen/list_item_space"
     android:orientation="horizontal">
 
     <TextView
@@ -10,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="N"
-        android:textSize="24sp"/>
+        android:textSize="24sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +22,8 @@
             android:id="@+id/DateTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2016-06-01 00:00:00 uploaded" />
+            android:text="2016-06-01 00:00:00 uploaded"
+            android:layout_marginBottom="@dimen/list_item_space"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,6 +34,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/list_item_space"
                 android:orientation="vertical"
                 android:gravity="center">
 
