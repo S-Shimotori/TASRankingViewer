@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import android.widget.ListView
 import com.github.kittinunf.result.Result
 import com.google.gson.Gson
@@ -28,6 +29,13 @@ import java.util.*
  */
 
 class ListFragment: Fragment() {
+    var maxItem: Int? = null
+    var isLoading = false
+    val query = "TAS OR TAP OR tool\"-\""
+    val mediaType = "application/json; charset=utf-8"
+    val requestSize = 10
+    lateinit var adapter: ListItemAdapter
+
     companion object {
         fun newInstance(position: Int): ListFragment {
             val listFragment = ListFragment()
@@ -40,12 +48,22 @@ class ListFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val listView = inflater!!.inflate(R.layout.list_view, null) as ListView
-        listView.adapter = ListNoItemAdapter(context, listOf(resources.getString(R.string.loading)))
-        listView.divider.alpha = 0
+        adapter = ListItemAdapter(context, ArrayList(), true)
 
         when (arguments.getInt("position")) {
             0 -> {
-                setListItem(listView, null, SearchQuery.SortBy.start_time, null, false, null)
+                listView.adapter = adapter
+                listView.setOnScrollListener(object: AbsListView.OnScrollListener {
+                    override fun onScroll(p0: AbsListView?, p1: Int, p2: Int, p3: Int) {
+                        if (!isLoading && (maxItem == null || (p1 + p2 == p3) && p3 < maxItem!!)) {
+                            isLoading = true
+                            loadNewArrival(listView, p3)
+                        }
+                    }
+
+                    override fun onScrollStateChanged(p0: AbsListView?, p1: Int) {
+                    }
+                })
             }
             1 -> {
                 val calendarThisMonth = Calendar.getInstance()
@@ -141,6 +159,62 @@ class ListFragment: Fragment() {
         })
     }
 
+    fun loadNewArrival(listView: ListView, from: Int) {
+        val query = SearchQuery.getInstance(
+                query, SearchQuery.SearchField.TAG, ListItemAdapter.getFieldList(), null, SearchQuery.SortBy.start_time, null, from, requestSize
+        )!!
+        val jsonString = Gson().toJson(query)
+
+        val client = OkHttpClient()
+        val request = Request.Builder()
+                .url(resources.getString(R.string.endpoint_search))
+                .post(RequestBody.create(MediaType.parse(mediaType), jsonString))
+                .build()
+        client.newCall(request).enqueue(object: Callback {
+            override fun onFailure(call: Call?, e: IOException?) {
+                // TODO
+                isLoading = false
+            }
+
+            override fun onResponse(call: Call?, response: Response?) {
+                if (response != null && response.isSuccessful) {
+                    val searchResponseString = response.body().string()
+                    if (searchResponseString.contains("}\n{")) {
+                        val searchResponse = SearchResponse.getInstance(searchResponseString)
+                        val hitsValues = searchResponse.hits[0].values
+                        val total = searchResponse.stats[0].values?.get(0)?.total
+                        if (hitsValues != null && total != null) {
+                            val videoData = VideoData.convertFromChunkHitsValues(hitsValues)
+                            when (videoData) {
+                                is Result.Success -> {
+                                    maxItem = total
+                                    val handler = Handler(Looper.getMainLooper())
+                                    handler.post {
+                                        for (data in videoData.value) {
+                                            adapter.add(data)
+                                        }
+                                        adapter.notifyDataSetChanged()
+
+                                        val position = listView.firstVisiblePosition
+                                        val yOffset = listView.getChildAt(0)?.top
+                                        if (yOffset != null) {
+                                            listView.setSelectionFromTop(position, yOffset)
+                                        }
+                                        listView.divider.alpha = 255
+                                        isLoading = false
+                                    }
+                                    return
+                                }
+                            }
+                        }
+                    }
+                }
+                response?.body()?.close()
+                isLoading = false
+                // TODO
+            }
+        })
+    }
     class ListFragmentPagerAdapter(fm: FragmentManager, titles: List<String>): FragmentPagerAdapter(fm) {
         private val titles = titles
 
