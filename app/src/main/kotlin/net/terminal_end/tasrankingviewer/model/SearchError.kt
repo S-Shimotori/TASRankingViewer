@@ -18,4 +18,7 @@ class SearchError(dqnId: String, errorId: ErrorId) {
         INVALID_FIELD("701"),
         TIMEOUT("1001")
     }
+
+    class Exception(val errid: String, detailMessage: String): java.lang.Exception(detailMessage) {
+    }
 }

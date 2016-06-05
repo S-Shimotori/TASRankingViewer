@@ -24,6 +24,7 @@ class SearchQuery private constructor(query: String, search: SearchField, join: 
 
     companion object {
         val ISSUER_NAME = "net.terminal_end.tasrankingviewer"
+        val MAX_SIZE = 100
 
         fun getInstance(query: String, search: SearchField, join: List<Field>, filters: List<Filter>?, sortBy: SortBy?, order: Order?, from: Int?, size: Int?): SearchQuery? {
             if ((from == null || from >= 0) && (size == null || 0 <= size && size <= 100)) {
