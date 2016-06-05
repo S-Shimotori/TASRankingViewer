@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
                 lastMonth.toString() + resources.getString(R.string.videos_ranking)
         )
         val listFragmentPagerAdapter = ListFragment.ListFragmentPagerAdapter(supportFragmentManager, titles)
+        viewPager.offscreenPageLimit = 2
         viewPager.adapter = listFragmentPagerAdapter
 
         val pagerSlidingTabStrip = findViewById(R.id.MainViewPagerTab) as PagerSlidingTabStrip
