@@ -39,7 +39,9 @@ class VideoData(cmsId: String, title: String, tags: List<String>, startTime: Cal
             })
         }
     }
+
     fun getScore(): Int {
         return viewCounter + commentCounter + myListCounter * 20
     }
+
 }

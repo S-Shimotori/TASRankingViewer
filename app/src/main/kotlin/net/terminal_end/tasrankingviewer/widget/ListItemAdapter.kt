@@ -26,12 +26,13 @@ class ListItemAdapter(context: Context, objects: List<VideoData>, showRowId: Boo
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
         var view: View?
 
+        val item = getItem(position)
+
         if (convertView == null) {
             view = layoutInflater.inflate(R.layout.list_item, parent, false)
         } else {
             view = convertView
         }
-        val item = getItem(position)
 
         val rankingTextView = view!!.findViewById(R.id.RankingTextView) as TextView
         if (showRowId) {
@@ -44,17 +45,17 @@ class ListItemAdapter(context: Context, objects: List<VideoData>, showRowId: Boo
         val dateTextView = view!!.findViewById(R.id.DateTextView) as TextView
         dateTextView.text =
                 item.startTime.get(Calendar.YEAR).toString() +
-                context.getString(R.string.year) +
-                (item.startTime.get(Calendar.MONTH) + 1).toString() +
-                context.getString(R.string.month) +
-                item.startTime.get(Calendar.DATE) +
-                context.getString(R.string.date) +
-                item.startTime.get(Calendar.HOUR) +
-                context.getString(R.string.hour) +
-                item.startTime.get(Calendar.MINUTE) +
-                context.getString(R.string.minute) +
-                item.startTime.get(Calendar.SECOND) +
-                context.getString(R.string.second)
+                        context.getString(R.string.year) +
+                        (item.startTime.get(Calendar.MONTH) + 1).toString() +
+                        context.getString(R.string.month) +
+                        item.startTime.get(Calendar.DATE) +
+                        context.getString(R.string.date) +
+                        item.startTime.get(Calendar.HOUR) +
+                        context.getString(R.string.hour) +
+                        item.startTime.get(Calendar.MINUTE) +
+                        context.getString(R.string.minute) +
+                        item.startTime.get(Calendar.SECOND) +
+                        context.getString(R.string.second)
 
         val thumbnailImageView = view!!.findViewById(R.id.ThumbnailImageView) as ImageView
         thumbnailImageView.scaleType = ImageView.ScaleType.CENTER_CROP
