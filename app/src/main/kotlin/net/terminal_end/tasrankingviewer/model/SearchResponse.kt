@@ -14,7 +14,7 @@ class SearchResponse(hits: List<Chunk.Hits>, stats: List<Chunk.Stats>) {
         fun getInstance(responseString: String): SearchResponse {
             val strings = responseString.split("\n")
             val gson = GsonBuilder()
-                    .registerTypeAdapter(Chunk::class.java, Chunk.ChunkDeserializer())
+                    .registerTypeAdapter(Chunk::class.java, Chunk.Deserializer())
                     .create()
             val chunks = strings.map { gson.fromJson(it, Chunk::class.java) }
             val hits = mutableListOf<Chunk.Hits>()

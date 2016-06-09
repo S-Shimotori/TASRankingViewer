@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun createLastModifiedMessage(calendar: Calendar): String {
+    private fun createLastModifiedMessage(calendar: Calendar): String {
         return calendar.get(Calendar.YEAR).toString() +
                 resources.getString(R.string.year) +
                 (calendar.get(Calendar.MONTH) + 1).toString() +

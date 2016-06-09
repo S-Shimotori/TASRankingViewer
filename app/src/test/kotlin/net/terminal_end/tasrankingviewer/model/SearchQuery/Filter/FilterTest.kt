@@ -22,7 +22,7 @@ class FilterTest {
             """.trimMargin()
 
             val filter = GsonBuilder()
-                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                     .create()
                     .fromJson(jsonString, SearchQuery.Filter::class.java)
             assertThat(filter, nullValue())
@@ -39,7 +39,7 @@ class FilterTest {
             """.trimMargin()
 
             val filter = GsonBuilder()
-                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                     .create()
                     .fromJson(jsonString, SearchQuery.Filter::class.java)
             assertThat(filter, nullValue())
@@ -55,7 +55,7 @@ class FilterTest {
             """.trimMargin()
 
             val filter = GsonBuilder()
-                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                     .create()
                     .fromJson(jsonString, SearchQuery.Filter::class.java)
             assertThat(filter, nullValue())
@@ -72,7 +72,7 @@ class FilterTest {
             """.trimMargin()
 
             val filter = GsonBuilder()
-                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                     .create()
                     .fromJson(jsonString, SearchQuery.Filter::class.java)
             assertThat(filter, nullValue())

@@ -19,9 +19,8 @@ import java.util.*
  * Created by S-Shimotori on 6/1/16.
  */
 
-class ListItemAdapter(context: Context, objects: List<VideoData>, showRowId: Boolean): ArrayAdapter<VideoData>(context, 0, objects) {
+class ListItemAdapter(context: Context, objects: List<VideoData>, private val showRowId: Boolean): ArrayAdapter<VideoData>(context, 0, objects) {
     private val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    val showRowId = showRowId
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
         var view: View?
@@ -104,7 +103,7 @@ class ListItemAdapter(context: Context, objects: List<VideoData>, showRowId: Boo
         }
     }
 
-    fun openNicoVideo(context: Context, cmsId: String) {
+    private fun openNicoVideo(context: Context, cmsId: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.nicovideo.jp/watch/" + cmsId))
         context.startActivity(intent)
     }

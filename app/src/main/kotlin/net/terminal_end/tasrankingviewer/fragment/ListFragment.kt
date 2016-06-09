@@ -35,18 +35,18 @@ import java.util.*
  */
 
 class ListFragment: Fragment() {
-    var maxItem: Int? = null
-    var isLoading = false
-    val query = "TAS OR TAP OR tool\"-\""
-    val mediaType = "application/json; charset=utf-8"
-    val requestNewArrivalSize = 40
-    val handler = Handler(Looper.getMainLooper())
-    var adapter: ListItemAdapter? = null
-    lateinit var button: Button
-    lateinit var linearLayout: LinearLayout
+    private var maxItem: Int? = null
+    private var isLoading = false
+    private val query = "TAS OR TAP OR tool\"-\""
+    private val mediaType = "application/json; charset=utf-8"
+    private val requestNewArrivalSize = 40
+    private val handler = Handler(Looper.getMainLooper())
+    private var adapter: ListItemAdapter? = null
+    private lateinit var button: Button
+    private lateinit var linearLayout: LinearLayout
 
     companion object {
-        fun newInstance(position: Int): ListFragment {
+        private fun newInstance(position: Int): ListFragment {
             val listFragment = ListFragment()
             val bundle = Bundle()
             bundle.putInt("position", position)
@@ -100,7 +100,7 @@ class ListFragment: Fragment() {
         return linearLayout
     }
 
-    fun createFilterForMonth(month: Int): SearchQuery.Filter {
+    private fun createFilterForMonth(month: Int): SearchQuery.Filter {
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val calendarBeginningOfMonth = Calendar.getInstance()
         calendarBeginningOfMonth.set(Calendar.MONTH, month)
@@ -122,7 +122,7 @@ class ListFragment: Fragment() {
         )
     }
 
-    fun setRankingToList(listView: ListView, month: Int) {
+    private fun setRankingToList(listView: ListView, month: Int) {
         val filter = createFilterForMonth(month)
         val objects = mutableListOf<VideoData>()
         Observable.create<Int> {
@@ -190,7 +190,7 @@ class ListFragment: Fragment() {
         })
     }
 
-    fun createPartialObservable(from: Int, filters: List<SearchQuery.Filter>): Observable<List<VideoData>> {
+    private fun createPartialObservable(from: Int, filters: List<SearchQuery.Filter>): Observable<List<VideoData>> {
         return Observable.create<List<VideoData>> {
             val searchQuery = SearchQuery.getInstance(query, SearchQuery.SearchField.TAG, ListItemAdapter.getFieldList(), filters, SearchQuery.SortBy.view_counter, null, from, SearchQuery.MAX_SIZE)
             val jsonString = Gson().toJson(searchQuery)
@@ -240,7 +240,7 @@ class ListFragment: Fragment() {
         }
     }
 
-    fun loadNewArrival(listView: ListView, from: Int) {
+    private fun loadNewArrival(listView: ListView, from: Int) {
         Observable.create<List<VideoData>> {
             val searchQuery = SearchQuery.getInstance(
                     query, SearchQuery.SearchField.TAG, ListItemAdapter.getFieldList(), null, SearchQuery.SortBy.start_time, null, from, requestNewArrivalSize
@@ -325,7 +325,7 @@ class ListFragment: Fragment() {
         })
     }
 
-    fun showReloadButton() {
+    private fun showReloadButton() {
         handler.post {
             if (button.parent == null) {
                 linearLayout.addView(button)
@@ -333,7 +333,7 @@ class ListFragment: Fragment() {
         }
     }
 
-    fun removeReloadButton() {
+    private fun removeReloadButton() {
         handler.post {
             if (button.parent != null) {
                 linearLayout.removeView(button)
@@ -341,8 +341,7 @@ class ListFragment: Fragment() {
         }
     }
 
-    class ListFragmentPagerAdapter(fm: FragmentManager, titles: List<String>): FragmentPagerAdapter(fm) {
-        private val titles = titles
+    class ListFragmentPagerAdapter(fm: FragmentManager, private val titles: List<String>): FragmentPagerAdapter(fm) {
 
         override fun getPageTitle(position: Int): CharSequence? {
             return titles[position]

@@ -26,7 +26,7 @@ class ChunkTest {
             """.trimMargin()
 
             val stats = GsonBuilder()
-                    .registerTypeAdapter(Chunk::class.java, Chunk.ChunkDeserializer())
+                    .registerTypeAdapter(Chunk::class.java, Chunk.Deserializer())
                     .create()
                     .fromJson(jsonString, Chunk::class.java)
             assertThat(stats, nullValue())
@@ -42,7 +42,7 @@ class ChunkTest {
             """.trimMargin()
 
             val stats = GsonBuilder()
-                    .registerTypeAdapter(Chunk::class.java, Chunk.ChunkDeserializer())
+                    .registerTypeAdapter(Chunk::class.java, Chunk.Deserializer())
                     .create()
                     .fromJson(jsonString, Chunk::class.java)
             assertThat(stats, nullValue())
@@ -69,7 +69,7 @@ class ChunkTest {
                 """.trimMargin()
 
                 val stats = GsonBuilder()
-                        .registerTypeAdapter(Chunk::class.java, Chunk.ChunkDeserializer())
+                        .registerTypeAdapter(Chunk::class.java, Chunk.Deserializer())
                         .create()
                         .fromJson(jsonString, Chunk::class.java) as Chunk.Stats
                 assertThat(stats.dqnid, `is`("c0676eea-cc77-4317-b442-d626c5f34558"))
@@ -89,7 +89,7 @@ class ChunkTest {
                 """.trimMargin()
 
                 val stats = GsonBuilder()
-                        .registerTypeAdapter(Chunk::class.java, Chunk.ChunkDeserializer())
+                        .registerTypeAdapter(Chunk::class.java, Chunk.Deserializer())
                         .create()
                         .fromJson(jsonString, Chunk::class.java) as Chunk.Stats
                 assertThat(stats.values, nullValue())
@@ -112,7 +112,7 @@ class ChunkTest {
                 """.trimMargin()
 
                 val stats = GsonBuilder()
-                        .registerTypeAdapter(Chunk::class.java, Chunk.ChunkDeserializer())
+                        .registerTypeAdapter(Chunk::class.java, Chunk.Deserializer())
                         .create()
                         .fromJson(jsonString, Chunk::class.java) as Chunk.Stats
                 assertThat(stats.endofstream, nullValue())
@@ -132,7 +132,7 @@ class ChunkTest {
                 """.trimMargin()
 
                 val stats = GsonBuilder()
-                        .registerTypeAdapter(Chunk::class.java, Chunk.ChunkDeserializer())
+                        .registerTypeAdapter(Chunk::class.java, Chunk.Deserializer())
                         .create()
                         .fromJson(jsonString, Chunk::class.java) as Chunk.Stats
                 assertThat(stats.values, nullValue())
@@ -152,7 +152,7 @@ class ChunkTest {
                 """.trimMargin()
 
                 val stats = GsonBuilder()
-                        .registerTypeAdapter(Chunk::class.java, Chunk.ChunkDeserializer())
+                        .registerTypeAdapter(Chunk::class.java, Chunk.Deserializer())
                         .create()
                         .fromJson(jsonString, Chunk::class.java) as Chunk.Stats
                 assertThat(stats.values, nullValue())
@@ -184,7 +184,7 @@ class ChunkTest {
                 )
 
                 val stats = GsonBuilder()
-                        .registerTypeAdapter(Chunk::class.java, Chunk.ChunkDeserializer())
+                        .registerTypeAdapter(Chunk::class.java, Chunk.Deserializer())
                         .create()
                         .fromJson(jsonString, Chunk::class.java) as Chunk.Hits
                 assertThat(stats.dqnid, `is`("c0676eea-cc77-4317-b442-d626c5f34558"))
@@ -204,7 +204,7 @@ class ChunkTest {
                 """.trimMargin()
 
                 val stats = GsonBuilder()
-                        .registerTypeAdapter(Chunk::class.java, Chunk.ChunkDeserializer())
+                        .registerTypeAdapter(Chunk::class.java, Chunk.Deserializer())
                         .create()
                         .fromJson(jsonString, Chunk::class.java) as Chunk.Hits
                 assertThat(stats.values, nullValue())
@@ -228,7 +228,7 @@ class ChunkTest {
                 """.trimMargin()
 
                 val stats = GsonBuilder()
-                        .registerTypeAdapter(Chunk::class.java, Chunk.ChunkDeserializer())
+                        .registerTypeAdapter(Chunk::class.java, Chunk.Deserializer())
                         .create()
                         .fromJson(jsonString, Chunk::class.java) as Chunk.Hits
                 assertThat(stats.endofstream, nullValue())
@@ -248,7 +248,7 @@ class ChunkTest {
                 """.trimMargin()
 
                 val stats = GsonBuilder()
-                        .registerTypeAdapter(Chunk::class.java, Chunk.ChunkDeserializer())
+                        .registerTypeAdapter(Chunk::class.java, Chunk.Deserializer())
                         .create()
                         .fromJson(jsonString, Chunk::class.java) as Chunk.Hits
                 assertThat(stats.values, nullValue())
@@ -268,7 +268,7 @@ class ChunkTest {
                 """.trimMargin()
 
                 val stats = GsonBuilder()
-                        .registerTypeAdapter(Chunk::class.java, Chunk.ChunkDeserializer())
+                        .registerTypeAdapter(Chunk::class.java, Chunk.Deserializer())
                         .create()
                         .fromJson(jsonString, Chunk::class.java) as Chunk.Hits
                 assertThat(stats.values, nullValue())

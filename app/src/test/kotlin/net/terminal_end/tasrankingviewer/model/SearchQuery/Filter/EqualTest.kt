@@ -24,7 +24,7 @@ class EqualTest {
             """.trimMargin()
 
             val filter = GsonBuilder()
-                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                     .create()
                     .fromJson(jsonString, SearchQuery.Filter::class.java)
             assertThat(filter, nullValue())
@@ -38,7 +38,7 @@ class EqualTest {
                 val jsonString = Gson().toJson(filter0)
 
                 val filter1 = GsonBuilder()
-                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                         .create()
                         .fromJson(jsonString, SearchQuery.Filter::class.java) as SearchQuery.Filter.Equal.Int
                 assertThat(filter1.type, `is`(SearchQuery.Filter.Type.equal))
@@ -55,7 +55,7 @@ class EqualTest {
                 val jsonString = Gson().toJson(filter0)
 
                 val filter1 = GsonBuilder()
-                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                         .create()
                         .fromJson(jsonString, SearchQuery.Filter::class.java) as SearchQuery.Filter.Equal.String
                 assertThat(filter1.type, `is`(SearchQuery.Filter.Type.equal))

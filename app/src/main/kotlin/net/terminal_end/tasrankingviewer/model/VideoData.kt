@@ -9,15 +9,9 @@ import java.util.*
  * Created by S-Shimotori on 6/3/16.
  */
 
-class VideoData(cmsId: String, title: String, tags: List<String>, startTime: Calendar, thumbnailUrl: String, viewCounter: Int, commentCounter: Int, myListCounter: Int) {
-    val cmsId = cmsId
+class VideoData(
+        val cmsId: String, title: String, val tags: List<String>, val startTime: Calendar, val thumbnailUrl: String, val viewCounter: Int, val commentCounter: Int, val myListCounter: Int) {
     val title = Html.fromHtml(title)
-    val tags = tags
-    val startTime = startTime
-    val thumbnailUrl = thumbnailUrl
-    val viewCounter = viewCounter
-    val commentCounter = commentCounter
-    val myListCounter = myListCounter
 
     companion object {
         fun convertFromChunkHitsValues(values: List<Chunk.Value.Hits>): Result<List<VideoData>, Exception> {

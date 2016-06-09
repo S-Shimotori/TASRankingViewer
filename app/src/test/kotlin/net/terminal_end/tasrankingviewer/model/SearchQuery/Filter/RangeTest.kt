@@ -26,7 +26,7 @@ class RangeTest {
             """.trimMargin()
 
             val filter = GsonBuilder()
-                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                     .create()
                     .fromJson(jsonString, SearchQuery.Filter::class.java) as SearchQuery.Filter.Range.Int
             assertThat(filter.type, `is`(SearchQuery.Filter.Type.range))
@@ -48,7 +48,7 @@ class RangeTest {
             """.trimMargin()
 
             val filter = GsonBuilder()
-                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                     .create()
                     .fromJson(jsonString, SearchQuery.Filter::class.java) as SearchQuery.Filter.Range.Int
             assertThat(filter.type, `is`(SearchQuery.Filter.Type.range))
@@ -74,7 +74,7 @@ class RangeTest {
                 """.trimMargin()
 
                 val filter = GsonBuilder()
-                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                         .create()
                         .fromJson(jsonString, SearchQuery.Filter::class.java) as SearchQuery.Filter.Range.Int
                 assertThat(filter.type, `is`(SearchQuery.Filter.Type.range))
@@ -98,7 +98,7 @@ class RangeTest {
                 """.trimMargin()
 
                 val filter = GsonBuilder()
-                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                         .create()
                         .fromJson(jsonString, SearchQuery.Filter::class.java) as SearchQuery.Filter.Range.Int
                 assertThat(filter.from, nullValue())
@@ -117,7 +117,7 @@ class RangeTest {
                 """.trimMargin()
 
                 val filter = GsonBuilder()
-                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                         .create()
                         .fromJson(jsonString, SearchQuery.Filter::class.java) as SearchQuery.Filter.Range.Int
                 assertThat(filter.to, nullValue())
@@ -141,7 +141,7 @@ class RangeTest {
                 """.trimMargin()
 
                 val filter = GsonBuilder()
-                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                         .create()
                         .fromJson(jsonString, SearchQuery.Filter::class.java) as SearchQuery.Filter.Range.String
                 assertThat(filter.type, `is`(SearchQuery.Filter.Type.range))
@@ -165,7 +165,7 @@ class RangeTest {
                 """.trimMargin()
 
                 val filter = GsonBuilder()
-                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                         .create()
                         .fromJson(jsonString, SearchQuery.Filter::class.java) as SearchQuery.Filter.Range.String
                 assertThat(filter.from, nullValue())
@@ -184,7 +184,7 @@ class RangeTest {
                 """.trimMargin()
 
                 val filter = GsonBuilder()
-                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                        .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                         .create()
                         .fromJson(jsonString, SearchQuery.Filter::class.java) as SearchQuery.Filter.Range.String
                 assertThat(filter.to, nullValue())

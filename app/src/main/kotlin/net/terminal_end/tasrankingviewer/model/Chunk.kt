@@ -29,7 +29,7 @@ interface Chunk {
         override val endofstream = endofstream
     }
 
-    class ChunkDeserializer: JsonDeserializer<Chunk> {
+    class Deserializer : JsonDeserializer<Chunk> {
         override fun deserialize(json: JsonElement?, typeOfT: java.lang.reflect.Type?, context: JsonDeserializationContext?): Chunk? {
             if (json == null || context == null) {
                 return null
@@ -103,10 +103,8 @@ interface Chunk {
     interface Value {
         val _rowid: Int
 
-        class Stats(rowId: Int, service: SearchResponse.Service, total: Int): Value {
+        class Stats(rowId: Int, val service: SearchResponse.Service, val total: Int): Value {
             override val _rowid = rowId
-            val service = service
-            val total = total
         }
 
         class Hits(rowId: Int,

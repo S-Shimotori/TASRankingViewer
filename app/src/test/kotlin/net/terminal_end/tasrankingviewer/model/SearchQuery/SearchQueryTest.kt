@@ -58,7 +58,7 @@ class SearchQueryTest {
             )!!
             val jsonString = Gson().toJson(searchQuery0)
             val searchQuery1 = GsonBuilder()
-                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                     .create()
                     .fromJson(jsonString, SearchQuery::class.java)
 
@@ -87,7 +87,7 @@ class SearchQueryTest {
             )!!
             val jsonString = Gson().toJson(searchQuery0)
             val searchQuery1 = GsonBuilder()
-                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                     .create()
                     .fromJson(jsonString, SearchQuery::class.java)
 
@@ -107,7 +107,7 @@ class SearchQueryTest {
             )!!
             val jsonString = Gson().toJson(searchQuery0)
             val searchQuery1 = GsonBuilder()
-                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                     .create()
                     .fromJson(jsonString, SearchQuery::class.java)
 
@@ -127,7 +127,7 @@ class SearchQueryTest {
             )!!
             val jsonString = Gson().toJson(searchQuery0)
             val searchQuery1 = GsonBuilder()
-                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                     .create()
                     .fromJson(jsonString, SearchQuery::class.java)
 
@@ -147,7 +147,7 @@ class SearchQueryTest {
             )!!
             val jsonString = Gson().toJson(searchQuery0)
             val searchQuery1 = GsonBuilder()
-                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                     .create()
                     .fromJson(jsonString, SearchQuery::class.java)
 
@@ -167,7 +167,7 @@ class SearchQueryTest {
             )!!
             val jsonString = Gson().toJson(searchQuery0)
             val searchQuery1 = GsonBuilder()
-                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.FilterDeserializer())
+                    .registerTypeAdapter(SearchQuery.Filter::class.java, SearchQuery.Deserializer())
                     .create()
                     .fromJson(jsonString, SearchQuery::class.java)
 

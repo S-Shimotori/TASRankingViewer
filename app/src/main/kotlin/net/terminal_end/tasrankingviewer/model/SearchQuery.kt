@@ -95,7 +95,7 @@ class SearchQuery private constructor(query: String, search: SearchField, join: 
         }
     }
 
-    class FilterDeserializer: JsonDeserializer<Filter> {
+    class Deserializer : JsonDeserializer<Filter> {
         override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): Filter? {
             if (json == null) {
                 return null
