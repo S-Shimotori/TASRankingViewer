@@ -174,7 +174,7 @@ class ListFragment: Fragment() {
             }
             Observable.zip(parts) {
                 it.fold(mutableListOf<VideoData>()) { result, list ->
-                    result.addAll(list as List<VideoData>)
+                    result.addAll((list as List<VideoData>).filterNot { Regex("^.刊TAS動画ランキング").containsMatchIn(it.title) })
                     result
                 }
             }
